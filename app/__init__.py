@@ -10,13 +10,16 @@ db = SQLAlchemy()
 
 def create_app():
     load_dotenv()
-    app_env = environ.get('APPLICATION_ENV') or 'development'
+    app_env = environ.get('APPLICATION_ENV') or 'dev'
 
     app = Flask(app_config[app_env].APP_NAME)
     app.config.from_object(app_config[app_env])
 
-    from app.routes import register_routes
-    register_routes(app, db)
+    from app.routes import core as core_blueprint
+    app.register_blueprint(
+        core_blueprint,
+        url_prefix='/api'
+    )
 
     db.init_app(app)
     migrate = Migrate(app, db)

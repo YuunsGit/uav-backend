@@ -6,7 +6,6 @@ load_dotenv()
 
 
 class BaseConfig(object):
-    """ Base config class. """
     APP_NAME = environ.get('APP_NAME') or 'UAV-Monitoring'
     FLASK_APP = environ.get('FLASK_APP') or 'run.py'
     SQLALCHEMY_DATABASE_URI = environ.get('SQLALCHEMY_DATABASE_URI')
@@ -14,25 +13,23 @@ class BaseConfig(object):
 
 
 class Development(BaseConfig):
-    """ Development config. """
     DEBUG = True
     ENV = 'dev'
 
 
 class Test(BaseConfig):
-    """ Test config. """
     DEBUG = False
+    TESTING = True
     ENV = 'test'
 
 
 class Production(BaseConfig):
-    """ Production config """
     DEBUG = False
-    ENV = 'production'
+    ENV = 'prod'
 
 
 config = {
-    'development': Development,
+    'dev': Development,
     'test': Test,
-    'production': Production,
+    'prod': Production,
 }
