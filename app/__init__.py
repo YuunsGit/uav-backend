@@ -13,7 +13,7 @@ ACCESS_KEY = os.environ.get("MINIO_ROOT_USER")
 SECRET_KEY = os.environ.get("MINIO_ROOT_PASSWORD")
 
 db = SQLAlchemy()
-client = Minio(MINIO_API_HOST, ACCESS_KEY, SECRET_KEY, secure=False)
+minio_client = Minio(MINIO_API_HOST, ACCESS_KEY, SECRET_KEY, secure=False)
 
 
 def create_app():

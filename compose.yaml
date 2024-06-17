@@ -1,9 +1,6 @@
 services:
   minio:
     image: quay.io/minio/minio
-    environment:
-      MINIO_ACCESS_KEY: minio
-      MINIO_SECRET_KEY: minio
     command: server --console-address ":9090"
     ports:
       - 9000:9000

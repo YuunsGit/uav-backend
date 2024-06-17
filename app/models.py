@@ -17,5 +17,6 @@ class Task(db.Model):
 
 class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    etag = db.Column(db.String(50), nullable=False, unique=True)
     path = db.Column(db.String(100), nullable=False)
     task_id = db.Column(db.Integer, db.ForeignKey('task.id'), nullable=False)
