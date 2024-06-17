@@ -1,10 +1,16 @@
+import io
+import random
+import os
 from flask import request, jsonify, Blueprint
 from app import db
+from app.minio import upload_object
 from app.models import Drone, Task, Image
-import random
 from PIL import Image as PILImage
 
 core = Blueprint('core', __name__)
+
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
+BUCKET_NAME = os.environ.get("MINIO_BUCKET")
 
 
 @core.route('/drones', methods=['GET'])
@@ -31,7 +37,7 @@ def get_task(id):
 @core.route('/tasks/<int:id>/execute', methods=['POST'])
 def execute_task(id):
     task = Task.query.get_or_404(id)
-    image_paths = generate_dummy_images(task.id)
+    image_paths = generate_image(task.id)
     for path in image_paths:
         new_image = Image(path=path, task_id=task.id)
         db.session.add(new_image)
@@ -45,11 +51,14 @@ def get_task_images(id):
     return jsonify([{'id': image.id, 'path': image.path} for image in images])
 
 
-def generate_dummy_images(id):
+def generate_image(id):
     image_paths = []
     for i in range(5):
-        image = PILImage.effect_noise((100, 100), random.randint(10, 100))
-        path = f'static/images/task_{id}_image_{i}.png'
-        image.save(path)
-        image_paths.append(path)
+        image = PILImage.effect_noise((300, 300), random.randint(10, 100))
+        filename = f'task{id}_image{i}.png'
+        with io.BytesIO() as buf:
+            image.save(buf, format='PNG')
+            byte_im = buf.getbuffer().nbytes
+            buf.seek(0)
+            upload_object(filename, buf, byte_im)
     return image_paths
