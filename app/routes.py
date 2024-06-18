@@ -1,22 +1,24 @@
-import os
-from flask import request, jsonify, Blueprint
+from os import environ
+from flask import request, jsonify, Blueprint, abort
 from app import db
 from app.helpers import generate_image, upload_image
 from app.models import Drone, Task, Image
 
 core = Blueprint('core', __name__)
 
-BUCKET_NAME = os.environ.get("MINIO_BUCKET")
+BUCKET_NAME = environ.get("MINIO_BUCKET")
 
 
 @core.route('/drones', methods=['GET'])
 def get_drones():
+    """ Get all drones. """
     drones = Drone.query.all()
     return jsonify([{'id': drone.id, 'name': drone.name} for drone in drones])
 
 
 @core.route('/tasks', methods=['POST'])
 def create_task():
+    """ Create a new task. """
     data = request.json
     new_task = Task(name=data['name'], description=data['description'], drone_id=data['drone_id'])
     db.session.add(new_task)
@@ -26,13 +28,19 @@ def create_task():
 
 @core.route('/tasks/<int:id>', methods=['GET'])
 def get_task(id):
-    task = Task.query.get_or_404(id)
+    """ Get a task by ID. """
+    task = Task.query.get(id)
+    if task is None:
+        abort(404, description="Task was not found")
     return jsonify({'id': task.id, 'name': task.name, 'description': task.description, 'drone_id': task.drone_id})
 
 
 @core.route('/tasks/<int:id>/execute', methods=['POST'])
 def execute_task(id):
-    task = Task.query.get_or_404(id)
+    """ Execute a task. """
+    task = Task.query.get(id)
+    if task is None:
+        abort(404, description="Task was not found")
     for i in range(5):
         image, image_id = generate_image()
         uploaded = upload_image(image, image_id, task)
@@ -45,5 +53,8 @@ def execute_task(id):
 
 @core.route('/tasks/<int:id>/images', methods=['GET'])
 def get_task_images(id):
-    images = Image.query.filter_by(task_id=id).all()
-    return jsonify([{'id': image.id, 'path': image.path, 'etag': image.etag} for image in images])
+    """ Get all images for a task. """
+    task = Task.query.get(id)
+    if task is None:
+        abort(404, description="Task was not found")
+    return jsonify([{'id': image.id, 'path': image.path, 'etag': image.etag} for image in task.images])

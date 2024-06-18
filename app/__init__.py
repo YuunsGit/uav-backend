@@ -1,5 +1,4 @@
 from flask import Flask
-import os
 from os import environ
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -8,9 +7,9 @@ from minio import Minio
 from .config import config as app_config
 
 
-MINIO_API_HOST = os.environ.get("MINIO_ENDPOINT")
-ACCESS_KEY = os.environ.get("MINIO_ROOT_USER")
-SECRET_KEY = os.environ.get("MINIO_ROOT_PASSWORD")
+MINIO_API_HOST = environ.get("MINIO_ENDPOINT")
+ACCESS_KEY = environ.get("MINIO_ROOT_USER")
+SECRET_KEY = environ.get("MINIO_ROOT_PASSWORD")
 
 db = SQLAlchemy()
 minio_client = Minio(MINIO_API_HOST, ACCESS_KEY, SECRET_KEY, secure=False)

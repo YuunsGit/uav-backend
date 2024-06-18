@@ -1,18 +1,20 @@
 import io
 import uuid
+import random
 from minio.commonconfig import Tags
 from PIL import Image as PILImage
-import random
 from app.minio import upload_object
 
 
 def generate_image():
+    """ Generate a random noisy image. """
     image = PILImage.effect_noise((500, 500), random.randint(10, 100))
     image_id = uuid.uuid4().int >> (128 - 32)
     return image, image_id
 
 
 def upload_image(image, image_id, task):
+    """ Upload an image to MinIO. """
     tags = Tags.new_object_tags()
     tags['Task'] = str(task.id)
     tags['Drone'] = str(task.drone_id)
