@@ -8,7 +8,7 @@ def create_dummy_data():
     db.drop_all()
     db.create_all()
 
-    drone_names = ['Bayraktar', 'ANKA', 'Akıncı', 'Aksungur']
+    drone_names = ['Bayraktar', 'ANKA', 'Akıncı', 'Aksungur', 'Alpha', 'Beta', 'Gamma', 'Delta']
     drones = [Drone(name=name) for name in drone_names]
     db.session.add_all(drones)
     db.session.commit()

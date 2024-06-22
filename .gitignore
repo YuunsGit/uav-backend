@@ -63,7 +63,6 @@ db.sqlite3-journal
 
 # Flask stuff:
 instance/
-migrations/
 static/
 .webassets-cache
 
@@ -102,6 +101,7 @@ celerybeat.pid
 
 # Environments
 .env
+.env.prod
 .venv
 env/
 venv/

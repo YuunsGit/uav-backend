@@ -15,9 +15,10 @@ SECRET_KEY = environ.get("MINIO_ROOT_PASSWORD")
 db = SQLAlchemy()
 minio_client = Minio(MINIO_API_HOST, ACCESS_KEY, SECRET_KEY, secure=False)
 
+load_dotenv()
+
 
 def create_app():
-    load_dotenv()
     app_env = environ.get('APPLICATION_ENV') or 'dev'
 
     app = Flask(app_config[app_env].APP_NAME)

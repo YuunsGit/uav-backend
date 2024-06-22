@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM python:3.12-rc-slim
+FROM --platform=linux/amd64 python:3.12-rc-slim
 
 WORKDIR /app
 
