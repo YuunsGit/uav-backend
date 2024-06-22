@@ -28,7 +28,7 @@ def create_app():
     from app.routes import core as core_blueprint
     app.register_blueprint(
         core_blueprint,
-        url_prefix='/api'
+        url_prefix='/app/api'
     )
 
     db.init_app(app)
