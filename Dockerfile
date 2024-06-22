@@ -9,6 +9,9 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
+RUN flask db migrate
+RUN flask db upgrade
+
 EXPOSE 5000
 
 CMD [ "python3", "run.py" ]
