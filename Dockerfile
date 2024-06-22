@@ -9,6 +9,11 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
+ENV FLASK_APP=run.py
+ENV MINIO_ENDPOINT=minio:9000
+ENV SQLALCHEMY_DATABASE_URI=sqlite:///project.db
+
+RUN flask db stamp head
 RUN flask db migrate
 RUN flask db upgrade
 
