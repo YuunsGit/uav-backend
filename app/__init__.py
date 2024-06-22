@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 from minio import Minio
 from .config import config as app_config
+from flask_cors import CORS
 
 
 MINIO_API_HOST = environ.get("MINIO_ENDPOINT")
@@ -21,6 +22,7 @@ def create_app():
 
     app = Flask(app_config[app_env].APP_NAME)
     app.config.from_object(app_config[app_env])
+    CORS(app)
 
     from app.routes import core as core_blueprint
     app.register_blueprint(

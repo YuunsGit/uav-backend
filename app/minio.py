@@ -12,3 +12,10 @@ def upload_object(filename, data, length, tags):
         minio_client.make_bucket(BUCKET_NAME)
     image = minio_client.put_object(BUCKET_NAME, filename, data, length, tags=tags)
     return image
+
+
+def get_object(id):
+    """ Get an object from MinIO. """
+    image = minio_client.get_object(BUCKET_NAME, f'{id}.png')
+    print('ImageRes', image)
+    return image

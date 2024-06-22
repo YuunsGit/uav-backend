@@ -18,7 +18,7 @@ def handle_exception(e):
         "code": e.code,
         "name": e.name,
         "description": e.description,
-    })
+    }), e.code
 
 
 if __name__ == '__main__':
