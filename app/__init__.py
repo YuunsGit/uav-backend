@@ -3,18 +3,11 @@ from os import environ
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
-from minio import Minio
 from .config import config as app_config
 from flask_cors import CORS
 
 
-MINIO_API_HOST = environ.get("MINIO_ENDPOINT")
-ACCESS_KEY = environ.get("MINIO_ROOT_USER")
-SECRET_KEY = environ.get("MINIO_ROOT_PASSWORD")
-
 db = SQLAlchemy()
-minio_client = Minio(MINIO_API_HOST, ACCESS_KEY, SECRET_KEY, secure=False)
-
 load_dotenv()
 
 

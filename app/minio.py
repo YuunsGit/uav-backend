@@ -1,8 +1,13 @@
 from os import environ
 
-from app import minio_client
+from minio import Minio
 
+MINIO_API_HOST = environ.get("MINIO_ENDPOINT")
+ACCESS_KEY = environ.get("MINIO_ROOT_USER")
+SECRET_KEY = environ.get("MINIO_ROOT_PASSWORD")
 BUCKET_NAME = environ.get("MINIO_BUCKET")
+
+minio_client = Minio(MINIO_API_HOST, ACCESS_KEY, SECRET_KEY, secure=False)
 
 
 def upload_object(filename, data, length, tags):
