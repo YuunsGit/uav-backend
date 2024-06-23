@@ -5,7 +5,7 @@ from app import create_app
 app = create_app()
 
 
-@app.route('/app/status', methods=['GET'])
+@app.route('/status', methods=['GET'])
 def status():
     """ Check the health status of the application. """
     return 'OK!'
