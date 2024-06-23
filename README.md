@@ -32,7 +32,7 @@ Before installing the UAV API, ensure that you have the following prerequisites 
 4. Run the docker container with compose
    
    ```sh
-   docker compose up --watch
+   docker compose up
    ```
 
 ## Endpoints

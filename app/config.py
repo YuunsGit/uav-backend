@@ -12,6 +12,7 @@ class BaseConfig(object):
     SECRET_KEY = environ.get('SECRET_KEY')
     SQLALCHEMY_DATABASE_URI = environ.get('SQLALCHEMY_DATABASE_URI')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    JSONIFY_PRETTYPRINT_REGULAR = True
 
 
 class Development(BaseConfig):
