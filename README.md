@@ -14,28 +14,23 @@ Before installing the UAV API, ensure that you have the following prerequisites 
 
 ## Installation
 
-1. Clone the repository
+1. Clone the repository and navigate to the project
    
    ```sh
    git clone https://github.com/YuunsGit/uav-backend.git
-   ```
-
-2. Navigate to the project directory and build the Docker containers using Docker Compose
-   
-   ```sh
    cd uav-backend
-   docker compose build
    ```
 
-3. Rename the `.env.example` file to `.env` in the root directory of the project
+2. Rename the `.env.example` file to `.env` in the root directory of the project
 
-4. Run the docker container with compose
+3. Build and run the Docker containers using Docker Compose
    
    ```sh
+   docker compose build
    docker compose up
    ```
 
-5. Seed the database if it's the first run
+4. Seed the database if it's the first run
 
    ```sh
    docker exec uav-api python seed.py
